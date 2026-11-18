@@ -1,6 +1,7 @@
 import http.client
 import re
 import subprocess
+import sys
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -96,7 +97,7 @@ def first_pass(video: Path, out_dir: Path, fps: float = 1.0,
     dur = duration(video)
     if dur * fps > max_frames:
         fps = max_frames / dur
-        print(f"Note: fps lowered to {fps:.3f} to stay within {max_frames} frames.")
+        print(f"Note: fps lowered to {fps:.3f} to stay within {max_frames} frames.", file=sys.stderr)
     _extract(video, str(out_dir / "tmp_%04d.jpg"), fps)
     frames = []
     for i, tmp in enumerate(sorted(out_dir.glob("tmp_*.jpg"))):

@@ -17,7 +17,7 @@ def test_first_pass_count(tiny_video, tmp_path):
 
 def test_first_pass_caps_long_clip(tiny_video, tmp_path, capsys):
     frames = first_pass(tiny_video, tmp_path, fps=100, max_frames=50)
-    assert len(frames) <= 51 and "lowered" in capsys.readouterr().out
+    assert len(frames) <= 51 and "lowered" in capsys.readouterr().err
 
 
 def test_close_up_window(tiny_video, tmp_path):
