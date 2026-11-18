@@ -27,6 +27,13 @@ class _Handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         name = self.path.split("?")[0]
+        if name.endswith("/short.mp4"):
+            self.send_response(200)
+            self.send_header("Content-Length", "100000")
+            self.end_headers()
+            self.wfile.write(b"x" * 10)
+            self.close_connection = True
+            return
         if not name.endswith(".mp4") or name.endswith("/missing.mp4"):
             self.send_error(404)
             return

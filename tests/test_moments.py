@@ -30,3 +30,9 @@ def test_download_bad_link_raises(tmp_path, local_http_server):
 def test_download_odd_filename(tmp_path, local_http_server):
     p = download(local_http_server + "/A%20vs%20B%20%28720p%2C%20h264%29.mp4_r1.mp4?se=1", tmp_path)
     assert p.name == "A vs B (720p, h264).mp4_r1.mp4" and p.stat().st_size > 0
+
+
+def test_download_truncated_raises_and_cleans_up(tmp_path, local_http_server):
+    with pytest.raises(ClipLinkError, match="get_clip"):
+        download(local_http_server + "/short.mp4?sig=x", tmp_path)
+    assert list(tmp_path.iterdir()) == []
